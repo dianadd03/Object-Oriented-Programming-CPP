@@ -491,7 +491,7 @@ public:
         }
 
         char* name = new char[MAX_LENGTH];
-        int ok=0;
+        /*int ok=0;
         User* user;
         while (!ok) {
             cout << "Numele clientului pe care se face comanda: ";
@@ -503,15 +503,15 @@ public:
             }
             else
                 ok=1;
-        }
+        }*/
         char usePoints;
         cout << "Doresti sa folosesti punctele de fidelitate pentru reducere? (y/n): ";
         in >> usePoints;
         in.get();
         if (usePoints == 'y' || usePoints == 'Y')
-            order = Order(user, coffees, quantities, numProducts, true);
+            order = Order(order.customer, coffees, quantities, numProducts, true);
         else
-            order = Order(user, coffees, quantities, numProducts, false);
+            order = Order(order.customer, coffees, quantities, numProducts, false);
 
         delete[] coffees;
         delete[] quantities;
@@ -675,7 +675,7 @@ int main() {
                         break;
                     }
                     case 1: {
-                        Order order;
+                        Order order(&user);
                         cin>>order;
                         cout<<"Previzualizare comanda:\n";
                         cout<<order;
@@ -687,8 +687,7 @@ int main() {
                         break;
                     }
                     case 2: {
-                        cout<<"Punctele dvs de fidelitate: ";
-                        user.getLoyaltyPoints();
+                        cout<<"Punctele dvs de fidelitate: "<<user.getLoyaltyPoints();
                         cout<<'\n';
                     }
                     default:
