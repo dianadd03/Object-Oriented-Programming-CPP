@@ -158,7 +158,6 @@ public:
     }
 
     void getUserById() const;
-
     static void addUserToList(const User& user);
     static bool verifyUser(const User& user);
     static User* getUserByName(char* name);
@@ -246,9 +245,8 @@ int User::szListOfUsers = 0;
 User* User::listOfUsers = new User[MAX_LENGTH];
 
 void User::showAllUsers(){
-    // sort(listOfUsers, listOfUsers+szListOfUsers);
     for (int i = 0; i < szListOfUsers; i++) {
-        cout << listOfUsers[i] << endl;
+        cout << listOfUsers[i] << "\n";
     }
 }
 
@@ -597,17 +595,16 @@ public:
         }
 
         char usePoints;
-        usePoints='n';
-        if ((*order.customer)[0]!='-') {
-            cout << "Doresti sa folosesti punctele de fidelitate pentru reducere? (y/n): ";
-            in >> usePoints;
-            in.get();
-        }
+        cout << "Doresti sa folosesti punctele de fidelitate pentru reducere? (y/n): ";
+        in >> usePoints;
+        in.get();
 
+        cout<<"aici";
         if (usePoints == 'y' || usePoints == 'Y')
             order = Order(order.customer, coffees, quantities, numProducts, true);
         else
             order = Order(order.customer, coffees, quantities, numProducts, false);
+        cout<<"aici2";
 
         delete[] coffees;
         delete[] quantities;
@@ -955,7 +952,6 @@ int main() {
             cout<<"[Coffee Shop]--AUTENTIFICARE--\n";
             cout<<"1.Intra in cont.\n";
             cout<<"2.Creeaza cont.\n";
-            cout<<"3.Comanda fara cont\n";
             cout<<"0.Iesire\n";
             cout<<"Introdu optiunea ta:";
             cin>>option;
@@ -975,11 +971,6 @@ int main() {
                 User::addUserToList(user);
                 cout<<"Ai primit 5 puncte din partea noastra pentru inregistrare!\n";
             }
-            else if (option==3) {
-                User guest("-guest", "--", 0, 0);
-                user=guest;
-                loggedin=1;
-            }
             else if (option==0) {
                 cout<<"Ai inchis aplicatia!";
                 break;
@@ -996,6 +987,7 @@ int main() {
                 cout << "3. Actualizeaza cafea\n";
                 cout << "4. Sterge cafea\n";
                 cout << "5. Afiseaza rezervarile\n";
+                cout << "6. Afiseaza clientii\n";
                 cout << "0. Iesire din cont\n";
                 cout << "Alegeti o optiune: ";
                 cin>>option;
@@ -1046,6 +1038,10 @@ int main() {
                         Reservation::showAllReservation();
                         break;
                     }
+                    case 6: {
+                        User::showAllUsers();
+                        break;
+                    }
                     case 0: {
                         loggedin=0;
                         break;
@@ -1075,6 +1071,7 @@ int main() {
                         char *nameu=user.getName();
                         User* temp;
                         temp=User::getUserByName(nameu);
+                        cout<<*temp;
                         Order order(temp);
                         cin>>order;
                         cout<<"Previzualizare comanda:\n\n";
