@@ -810,7 +810,7 @@ public:
     }
     friend istream& operator>>(istream& in, Reservation& res) {
         char* reservationTime= new char[MAX_LENGTH];
-        cout<<"Introdu data si ora rezervarii(DD/MM/YY HH:MM): ";
+        cout<<"Introdu data si ora rezervarii(YY/MM/DD HH:MM): ";
         in.get(reservationTime, MAX_LENGTH);
         in.get();
         int nseats;
@@ -913,6 +913,7 @@ void Reservation::showReservationsForUser( User& user) {
     }
 }
 void Reservation::showAllReservation() {
+    sort(listOfReservations, listOfReservations + szListOfReservations);
     for (int i = 0; i < szListOfReservations; i++)
         cout<<listOfReservations[i];
 }
@@ -1090,12 +1091,9 @@ int main() {
                             if (frequency[i]>10000) {
                                 Coffee *cof;
                                 cof=Coffee::getCoffeeById(i+10);
-                                cof++;
-                            }
-                            else if (frequency[i]==0) {
-                                Coffee *cof;
-                                cof=Coffee::getCoffeeById(i+10);
-                                cof--;
+                                // cout<<*cof;
+                                ++(*cof);
+                                frequency[i]-=10000;
                             }
                         break;
                     }
