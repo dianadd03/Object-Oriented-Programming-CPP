@@ -173,6 +173,14 @@ public:
     void setLoyaltyPoints(int loyaltypoints);
     void addLoyaltyPoints(int points);
     static void showAllUsers();
+    static void deleteUserList() {
+        if (listOfUsers != nullptr) {
+            delete[] listOfUsers;
+            listOfUsers = nullptr;
+            szListOfUsers = 0;
+        }
+    }
+
 
 };
 
@@ -588,6 +596,11 @@ public:
             in >> coffeeID;
             frequency[coffeeID-10]++;
             coffees[i] = Coffee::getCoffeeById(coffeeID);
+            if (coffees[i]==nullptr) {
+                i--;
+                cout<<"Optiune invalida!\n";
+                continue;
+            }
             in.get();
             cout << "Introdu numarul de bauturi dorite: ";
             in >> quantities[i];
@@ -599,12 +612,10 @@ public:
         in >> usePoints;
         in.get();
 
-        cout<<"aici";
         if (usePoints == 'y' || usePoints == 'Y')
             order = Order(order.customer, coffees, quantities, numProducts, true);
         else
             order = Order(order.customer, coffees, quantities, numProducts, false);
-        cout<<"aici2";
 
         delete[] coffees;
         delete[] quantities;
@@ -681,6 +692,14 @@ public:
 
     static void addOrderToList(const Order& order);
     static Order* getOrderById(long long orderId);
+    static void deleteOrderList() {
+        if (listOfOrders != nullptr) {
+            delete[] listOfOrders;
+            listOfOrders = nullptr;
+            szListOfOrders = 0;
+        }
+    }
+
 };
 
 long long Order::generatorIdOrd = 100;
@@ -780,7 +799,6 @@ public:
         return *this;
     }
 
-    // Operator de adunare
     Reservation& operator+(int val) {
         this->numberOfSeats += val;
         return *this;
@@ -841,6 +859,14 @@ public:
     static void deleteReservationById(int reservationId);
     static void showReservationsForUser(User& user);
     static void showAllReservation();
+    static void deleteReservationList() {
+        if (listOfReservations != nullptr) {
+            delete[] listOfReservations;
+            listOfReservations = nullptr;
+            szListOfReservations = 0;
+        }
+    }
+
 
 };
 int Reservation::generatorIdRes = 1000;
@@ -893,7 +919,7 @@ void Reservation::deleteReservationById(int reservationId) {
     if (startDelete) {
         szListOfReservations--;
     } else {
-        cout << "Rezervarea cu ID-ul " << reservationId << " nu a fost gasită.\n";
+        cout << "Rezervarea cu ID-ul " << reservationId << " nu a fost gasita.\n";
     }
 }
 
@@ -920,7 +946,7 @@ int main() {
     User admin;
     User user;
     int option;
-    admin.setName("admin");
+    admin.setName("@admin");
     admin.setPassword("admin_password");
     admin.setAdmin(1);
     User::addUserToList(admin);
@@ -936,16 +962,13 @@ int main() {
     user2.setAdmin(0);
     user2.setLoyaltyPoints(10);
     User::addUserToList(user2);
-    // User::showAllUsers();
-    // User* user5=User::getUserById(2);
-    // cout<<*user5;
     Coffee::addCoffeeToList(Coffee("Espresso", 10.00, "0:1:0 (lapte: cafea: spuma)", 30));
     Coffee::addCoffeeToList(Coffee("Cappucciono", 13.00, "1:1:1 (lapte: cafea: spuma)", 150));
     Coffee::addCoffeeToList(Coffee("Latte", 17.00, "3:1:0 (lapte: cafea: spuma)", 300));
     Coffee::addCoffeeToList(Coffee("Macchiato", 12.00, "1:2:0 (lapte: cafea: spuma)", 60));
     Coffee::addCoffeeToList(Coffee("Flat White", 15.00, "2:1:0 (lapte: cafea: spuma)", 150));
     Coffee::addCoffeeToList(Coffee("Mocha", 20.00, "2:1:1 (lapte: cafea: ciocolata)", 200));
-    Coffee::addCoffeeToList(Coffee("Affogato", 22.00, "0:1:1 (lapte: cafea: i1nghetata)", 250));
+    Coffee::addCoffeeToList(Coffee("Affogato", 22.00, "0:1:1 (lapte: cafea: inghetata)", 250));
     do {
         if (!loggedin) {
 
@@ -981,7 +1004,7 @@ int main() {
         }
         if (loggedin) {
             cout<<"[Coffee Shop] -- MENIU INTERACTIV --\n";
-            if (user==admin) {
+            if (user[0]=='@') {
                 cout << "1. Adauga cafea\n";
                 cout << "2. Afiseaza meniu\n";
                 cout << "3. Actualizeaza cafea\n";
@@ -1142,6 +1165,14 @@ int main() {
             }
         }
     }while (true);
+
+
+
+    User::deleteUserList();
+    Coffee::deleteCoffeeList();
+    Order::deleteOrderList();
+    Reservation::deleteReservationList();
+
 
     return 0;
 }
