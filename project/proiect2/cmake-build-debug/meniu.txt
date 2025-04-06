@@ -1,0 +1,110 @@
+Bautura
+Espresso
+10.00
+0:1:0 (lapte: cafea: spuma)
+30
+1
+
+Bautura
+Cappucciono
+13.00
+1:1:1 (lapte: cafea: spuma)
+150
+1
+
+Bautura
+Latte
+17.00
+3:1:0 (lapte: cafea: spuma)
+300
+1
+
+Bautura
+Macchiato
+12.00
+1:2:0 (lapte: cafea: spuma)
+60
+1
+
+Bautura
+Flat White
+15.00
+2:1:0 (lapte: cafea: spuma)
+150
+1
+
+Bautura
+Ice Tea
+15.00
+de piersici
+300
+0
+
+Mancare
+Toast cu avocado
+11.0
+Pâine integrala, avocado, ulei masline
+270
+1
+
+Mancare
+Sandwich cu sunca & branza
+12.0
+Bagheta, sunca, cascaval
+320
+0
+
+Mancare
+Croissant simplu
+8.0
+Croissant clasic cu unt
+230
+0
+
+Mancare
+Pain au chocolat
+9.5
+Croissant cu ciocolata
+280
+0
+
+Mancare
+Banana bread
+10.0
+Chec cu banane si nuci
+270
+1
+
+Mancare
+Muffin cu afine
+9.0
+Briosa cu afine proaspete
+350
+0
+
+Oferta
+French Breakfast
+18.00
+Cappuccino + Croissant
+150
+1
+230
+0
+
+Oferta
+Vegan Morning
+17.00
+Espresso + Banana bread
+30
+1
+270
+1
+
+Oferta
+Sweet Day
+25.00
+Latte + Pain au chocolat
+300
+1
+280
+0
