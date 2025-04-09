@@ -1,8 +1,31 @@
 #include<bits/stdc++.h>
+#include <windows.h>
 using namespace std;
 const unsigned int MAX_LENGTH = 256;
 
 int frequency[MAX_LENGTH];
+
+void SetColor(int ForgC){
+    WORD wColor;
+
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+    if(GetConsoleScreenBufferInfo(hStdOut, &csbi)){
+        wColor = (csbi.wAttributes & 0xF0) + (ForgC & 0x0F);
+        SetConsoleTextAttribute(hStdOut, wColor);
+    }
+    return;
+}
+
+void setupConsole() {
+    SetConsoleOutputCP(CP_UTF8);
+}
+
+string toLower(string s) {
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    return s;
+}
 
 class User {
 private:
@@ -321,6 +344,7 @@ public:
 
     virtual void showDetails() const = 0;
     virtual string getProductType() const = 0;
+    virtual bool matchesKeyword(const string& keyword) const = 0;
 
     int getProductId() {
         return productId;
@@ -407,6 +431,7 @@ public:
     }
     void showDetails() const ;
     string getProductType() const;
+    bool matchesKeyword(const string& keyword) const ;
 
     int getKcal() {
         return kcal;
@@ -421,9 +446,20 @@ public:
         this->vegan = vegan;
     }
 };
+bool Food::matchesKeyword(const string& keyword) const {
+    string loweredName = toLower(name);
+    string loweredDesc = toLower(description);
+    string loweredKeyword = toLower(keyword);
+
+    return loweredName.find(loweredKeyword) != string::npos ||
+           loweredDesc.find(loweredKeyword) != string::npos;
+}
 
 void Food::showDetails() const {
-    cout<<"[Mancare]: #"<<productId<<"\n";
+    SetColor(1);
+    cout <<"[MANCARE]";
+    SetColor(15);
+    cout<<": #"<<productId<<'\n';
     cout << "Denumire: " << name << '\n';
     cout << "Pretul: " << price << '\n';
     cout << "Descriere: " << description << '\n';
@@ -489,6 +525,7 @@ public:
     }
     void showDetails() const ;
     string getProductType() const;
+    bool matchesKeyword(const string& keyword) const;
 
     float getAmount() {
         return amount;
@@ -504,8 +541,20 @@ public:
     }
 };
 
+bool Drink::matchesKeyword(const string& keyword) const {
+    string loweredName = toLower(name);
+    string loweredDesc = toLower(description);
+    string loweredKeyword = toLower(keyword);
+
+    return loweredName.find(loweredKeyword) != string::npos ||
+           loweredDesc.find(loweredKeyword) != string::npos;
+}
+
 void Drink::showDetails() const {
-    cout<<"[Bautura]: #"<<productId<<"\n";
+    SetColor(5);
+    cout <<"[BAUTURA]";
+    SetColor(15);
+    cout<<": #"<<productId<<'\n';
     cout << "Denumire: " << name << '\n';
     cout << "Pretul: " << price << '\n';
     cout << "Descriere: " << description << '\n';
@@ -518,7 +567,6 @@ string Drink::getProductType() const {
 }
 
 class Offer: public Drink, public Food {
-private:
 
 public:
     Offer() : Drink(), Food() {}
@@ -578,9 +626,24 @@ public:
 
     void showDetails() const ;
     string getProductType() const;
+    bool matchesKeyword(const string& keyword) const;
+
 };
+
+bool Offer::matchesKeyword(const string& keyword) const {
+    string loweredName = toLower(name);
+    string loweredDesc = toLower(description);
+    string loweredKeyword = toLower(keyword);
+
+    return loweredName.find(loweredKeyword) != string::npos ||
+           loweredDesc.find(loweredKeyword) != string::npos;
+}
+
 void Offer::showDetails() const  {
-    cout << "[Oferta] #" << productId << "\n";
+    SetColor(4);
+    cout <<"[OFERTA]";
+    SetColor(15);
+    cout<<": #"<<productId<<'\n';
     cout << "Nume: " << name <<"\n";
     cout << "Pretul: " << price << "\n";
     cout << "Descriere: " << description << "\n";
@@ -667,7 +730,6 @@ public:
     }
 
     friend istream& operator>>(istream& in, Order& order) {
-        showAllProducts();
         int numProducts;
         cout << "Cate produse diferite vrei sa comanzi? ";
         in >> numProducts;
@@ -1084,11 +1146,50 @@ void readProductsFromFile(const string& filename) {
     fin.close();
 }
 
+void searchProductByKeyword(const string& keyword) {
+    bool found = false;
+    for (auto p : listOfProducts) {
+        if (p->matchesKeyword(keyword)) {
+            p->showDetails();
+            found = true;
+        }
+    }
+    if (!found)
+        cout << "Niciun produs nu se potriveste cu: " << keyword << "\n";
+}
 
+void showClientMenu() {
+    cout << "╔══════════════════════════════════════════════╗\n";
+    cout << "║           WELCOME TO OUR COFFEE SHOP         ║\n";
+    cout << "╠══════════════════════════════════════════════╣\n";
+    cout << "║  1. Plaseaza o comanda                       ║\n";
+    cout << "║  2. Verifica puncte de fidelitate            ║\n";
+    cout << "║  3. Rezerva un loc                           ║\n";
+    cout << "║  4. Vezi rezervarile tale                    ║\n";
+    cout << "║  5. Anuleaza o rezervare                     ║\n";
+    cout << "║  0. Iesire din cont                          ║\n";
+    cout << "╚══════════════════════════════════════════════╝\n";
+    cout << "Selecteaza optiunea dorita: "<<flush;
+}
 
+void showAdminMenu() {
+    cout << "╔═════════════════════════════════════════════════╗\n";
+    cout << "║            ADMIN COFFEE CONTROL PANEL           ║\n";
+    cout << "╠═════════════════════════════════════════════════╣\n";
+    cout << "║  1. Adauga produs                               ║\n";
+    cout << "║  2. Afiseaza meniul complet                     ║\n";
+    cout << "║  3. Actualizeaza un produs existent             ║\n";
+    cout << "║  4. Sterge un produs                            ║\n";
+    cout << "║  5. Afiseaza toate rezervarile                  ║\n";
+    cout << "║  6. Afiseaza lista clientilor                   ║\n";
+    cout << "║  0. Deconectare                                 ║\n";
+    cout << "╚═════════════════════════════════════════════════╝\n";
+    cout << "Selecteaza o optiune din meniul de mai sus: "<<flush;
+}
 
 
 int main() {
+    setupConsole();
     frequency[0] = 10000;
     bool loggedin=0;
     User admin;
@@ -1145,16 +1246,8 @@ int main() {
             }
         }
         if (loggedin) {
-            cout<<"[Coffee Shop] -- MENIU INTERACTIV --\n";
             if (user[0]=='@') {
-                cout << "1. Adauga produs\n";
-                cout << "2. Afiseaza meniu\n";
-                cout << "3. Actualizeaza produs\n";
-                cout << "4. Sterge produs\n";
-                cout << "5. Afiseaza rezervarile\n";
-                cout << "6. Afiseaza clientii\n";
-                cout << "0. Iesire din cont\n";
-                cout << "Alegeti o optiune: ";
+                showAdminMenu();
                 cin>>option;
                 cin.get();
                 switch (option) {
@@ -1162,7 +1255,7 @@ int main() {
                         cout << "a. Bautura\nb. Mancare\nc. Oferta\n";
                         char type;
                         cin >> type;
-                        cin.get(); // curățare buffer
+                        cin.get();
 
                         Product* p = nullptr;
 
@@ -1205,12 +1298,12 @@ int main() {
                                 found = true;
                                 break;
                             }
-                            else if (p && p->getProductType() == "Mancare" && dynamic_cast<Food*>(p)->getProductId() == idToUpdate) {
+                            if (p && p->getProductType() == "Mancare" && dynamic_cast<Food*>(p)->getProductId() == idToUpdate) {
                                 cin >> *dynamic_cast<Food*>(p);
                                 found = true;
                                 break;
                             }
-                            else if (p && p->getProductType() == "Oferta" && dynamic_cast<Offer*>(p)->getProductId() == idToUpdate) {
+                            if (p && p->getProductType() == "Oferta" && dynamic_cast<Offer*>(p)->getProductId() == idToUpdate) {
                                 cin >> *dynamic_cast<Offer*>(p);
                                 found = true;
                                 break;
@@ -1262,13 +1355,7 @@ int main() {
                 }
             }
             else {
-                cout << "1. Plaseaza o comanda\n";
-                cout << "2. Verifica puncte fidelitate\n";
-                cout << "3. Rezerva un loc\n";
-                cout << "4. Vezi rezervarile tale\n";
-                cout << "5. Anuleaza o rezervare\n";
-                cout << "0. Iesire din cont\n";
-                cout << "Alegeti optiunea: ";
+               showClientMenu();
                 cin >> option;
                 cin.get();
                 switch (option) {
@@ -1278,10 +1365,23 @@ int main() {
                         break;
                     }
                     case 1: {
+                        cout<<"\n";
+                        cout<<"Vrei sa cauti un produs anume?[1/0]: ";
+                        int option;
+                        cin>>option;
+                        if (option) {
+                            cout<<"Introdu un cuvant sugestiv pentru cautarea ta: ";
+                            string keyword;
+                            cin>>keyword;
+                            searchProductByKeyword(keyword);
+                        }
+                        else
+                            showAllProducts();
+
                         char *nameu=user.getName();
                         User* temp;
                         temp=User::getUserByName(nameu);
-                        cout<<*temp;
+                        // cout<<*temp;
                         Order order(temp);
                         cin>>order;
                         cout<<"Previzualizare comanda:\n\n";
@@ -1304,6 +1404,7 @@ int main() {
                         break;
                     }
                     case 3: {
+
                         char *nameu=user.getName();
                         User* temp;
                         temp=User::getUserByName(nameu);
