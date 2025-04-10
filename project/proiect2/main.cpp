@@ -664,10 +664,16 @@ bool sort_criteria( Product *A, Product *B) {
 }
 
 void showAllProducts() {
+    SetColor(6);
+    cout << "╔═══════════════════════════════════╗\n";
+    cout << "║              MENIU☕️              ║\n";
+    cout << "╚═══════════════════════════════════╝\n";
+    SetColor(15);
     sort(listOfProducts.begin(), listOfProducts.end(), sort_criteria);
     for (auto p : listOfProducts) {
+        cout<<"╔═══════════════════════════════════╗\n";
         p->showDetails();
-        cout << "-------------------------\n";
+        cout<<"╚═══════════════════════════════════╝\n";
     }
 }
 
