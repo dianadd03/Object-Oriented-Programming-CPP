@@ -1039,11 +1039,13 @@ char* Reservation::getReservationTime() {
     return reservationTime;
 }
 void Reservation::setReservationTime(char* reservationTime) {
+    if (this->reservationTime != nullptr)
+        delete[] this->reservationTime;
     this->reservationTime = new char[MAX_LENGTH];
     strcpy(this->reservationTime, reservationTime);
 }
 void Reservation::setCustomer(User* customer) {
-    this->customerId = customerId;
+    this->customerId = customer->getUserId();
 }
 void Reservation::setNumberOfSeats(int numberOfSeats) {
     this->numberOfSeats = numberOfSeats;
@@ -1400,6 +1402,7 @@ int main() {
                         else if (tolower(yn)!='n')
                             cout<<"Optiune invalida!\n";
 
+                        break;
                     }
                     case 2: {
                         char *nameu=user.getName();
