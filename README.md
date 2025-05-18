@@ -31,3 +31,12 @@ This project is a graphical user interface (GUI) application for managing a virt
 1. Install SFML and ImGui-SFML
 2. Compile `main.cpp`
 3. Run the app
+
+
+<p align="center"> <img src="images/first_page.png" alt=Screenshot 1" width="600"/> </p> 
+<p align="center"> <img src="images/admin_menu.png" alt="Screenshot 2" width="600"/> </p> 
+<p align="center"> <img src="images/add_product.png" alt="Screenshot 3" width="600"/> </p>
+<p align="center"> <img src="images/upgrade_product.png" alt="Screenshot 4" width="600"/> </p>
+<p align="center"> <img src="images/export.png" alt="Screenshot 5" width="600"/> </p>
+<p align="center"> <img src="images/place_order.png" alt="Screenshot 6" width="600"/> </p>
+<p align="center"> <img src="images/lPoints.png" alt="Screenshot 7" width="600"/> </p>
