@@ -6,7 +6,7 @@ Espresso
 1
 
 Bautura
-Cappucciono
+Cappuccino
 13.00
 1:1:1 (lapte: cafea: spuma)
 150
@@ -43,7 +43,7 @@ de piersici
 Mancare
 Toast cu avocado
 11.0
-Pâine integrala, avocado, ulei masline
+Paine integrala, avocado, ulei masline
 270
 1
 

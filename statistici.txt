@@ -1,0 +1,4 @@
+Nr. utilizatori: 4
+Nr. produse: 15
+Nr. rezervari: 1
+Nr. comenzi: 1

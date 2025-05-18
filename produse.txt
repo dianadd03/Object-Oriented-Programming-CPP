@@ -1,0 +1,75 @@
+Id produs: 10
+Denumire: Espresso
+Pretul: 10
+Descriere: 0:1:0 (lapte: cafea: spuma)
+
+Id produs: 11
+Denumire: Cappuccino
+Pretul: 13
+Descriere: 1:1:1 (lapte: cafea: spuma)
+
+Id produs: 12
+Denumire: Latte
+Pretul: 17
+Descriere: 3:1:0 (lapte: cafea: spuma)
+
+Id produs: 13
+Denumire: Macchiato
+Pretul: 12
+Descriere: 1:2:0 (lapte: cafea: spuma)
+
+Id produs: 14
+Denumire: Flat White
+Pretul: 15
+Descriere: 2:1:0 (lapte: cafea: spuma)
+
+Id produs: 15
+Denumire: Ice Tea
+Pretul: 15
+Descriere: de piersici
+
+Id produs: 16
+Denumire: Toast cu avocado
+Pretul: 11
+Descriere: Paine integrala, avocado, ulei masline
+
+Id produs: 17
+Denumire: Sandwich cu sunca & branza
+Pretul: 12
+Descriere: Bagheta, sunca, cascaval
+
+Id produs: 18
+Denumire: Croissant simplu
+Pretul: 8
+Descriere: Croissant clasic cu unt
+
+Id produs: 19
+Denumire: Pain au chocolat
+Pretul: 9.5
+Descriere: Croissant cu ciocolata
+
+Id produs: 20
+Denumire: Banana bread
+Pretul: 10
+Descriere: Chec cu banane si nuci
+
+Id produs: 21
+Denumire: Muffin cu afine
+Pretul: 9
+Descriere: Briosa cu afine proaspete
+
+Id produs: 22
+Denumire: French Breakfast
+Pretul: 18
+Descriere: Cappuccino + Croissant
+
+Id produs: 23
+Denumire: Vegan Morning
+Pretul: 17
+Descriere: Espresso + Banana bread
+
+Id produs: 24
+Denumire: Sweet Day
+Pretul: 25
+Descriere: Latte + Pain au chocolat
+

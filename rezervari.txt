@@ -1,0 +1,5 @@
+Id-ul rezervarii: 1258
+Nume: Andrei
+Numar de persoane: 2
+Data si ora: 23/06/2025 11:00
+

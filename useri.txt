@@ -1,0 +1,19 @@
+ID user: 261
+Nume user: @admin
+Parola user: admin_password
+
+ID user: 262
+Nume user: Diana
+Parola user: Delia
+Puncte de fidelitate: 100
+
+ID user: 263
+Nume user: Maria
+Parola user: Ioana
+Puncte de fidelitate: 10
+
+ID user: 264
+Nume user: Andrei
+Parola user: Diana
+Puncte de fidelitate: 1
+
