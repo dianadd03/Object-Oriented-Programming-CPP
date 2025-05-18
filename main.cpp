@@ -21,7 +21,7 @@ bool isValidDate(const std::string& date) {
     if (luna < 1 || luna > 12) return false;
     if (an < 2024) return false;
 
-    if (luna == 2 && zi > 29) return false; // februarie maxim 29 zile
+    if (luna == 2 && zi > 29) return false; 
     if ((luna == 4 || luna == 6 || luna == 9 || luna == 11) && zi > 30) return false;
 
     return true;
@@ -1073,7 +1073,6 @@ Reservation* Reservation::getReservations() {
 
 int getMaxZi(int luna, int an) {
     if (luna == 1) {
-        // An bisect
         if ((an % 4 == 0 && an % 100 != 0) || (an % 400 == 0))
             return 29;
         else
@@ -1150,7 +1149,6 @@ public:
     }
 
     static void throwIfTimeIntervalIncorrect(const string& time, const string& label = "Interval") {
-        // HH:MM logic (dacă vrei să o păstrezi pentru ora)
         if (time.length() != 5 || time[2] != ':' ||
             !isdigit(time[0]) || !isdigit(time[1]) ||
             !isdigit(time[3]) || !isdigit(time[4]))
@@ -1175,7 +1173,6 @@ public:
         int luna = stoi(dateStr.substr(3, 2));
         int an = stoi(dateStr.substr(6, 4));
 
-        // data curenta
         time_t t = time(nullptr);
         tm* now = localtime(&t);
 
@@ -1367,7 +1364,6 @@ int main() {
     user2.setAdmin(0);
     user2.setLoyaltyPoints(10);
     User::addUserToList(user2);
-    //readProductsFromFile("meniu.txt");
 
     sf::RenderWindow window(sf::VideoMode(800, 600), "Cafenea GUI");
     window.setFramerateLimit(60);
@@ -1581,7 +1577,7 @@ int main() {
             static int calories = 0;
             static bool isVegan = false;
 
-            static bool inputError = false; // pentru eroare la input
+            static bool inputError = false; 
 
             ImGui::Text("Selecteaza tipul produsului:");
             ImGui::RadioButton("Bautura", &productType, 0); ImGui::SameLine();
@@ -1627,7 +1623,6 @@ int main() {
             if (ImGui::Button("Salveaza")) {
                 inputError = false;
 
-                // Validare
                 if (strlen(name) == 0 || price <= 0.0f) {
                     inputError = true;
                 }
@@ -1674,7 +1669,6 @@ int main() {
                         listOfProducts.push_back(p);
                         ImGui::OpenPopup("Succes");
 
-                        // Resetam toate campurile
                         name[0] = '\0';
                         price = 0.0f;
                         description[0] = '\0';
@@ -1693,7 +1687,6 @@ int main() {
 
             if (ImGui::Button("Inapoi")) {
                 currentState = AppState::AdminMenu;
-                // Resetam campurile cand plecam
                 name[0] = '\0';
                 price = 0.0f;
                 description[0] = '\0';
@@ -1725,7 +1718,6 @@ int main() {
             bool hasDrinks = false, hasFoods = false, hasOffers = false;
             sort(listOfProducts.begin(), listOfProducts.end(), sort_criteria);
 
-            // Verificam daca avem produse pentru fiecare categorie
             for (auto p : listOfProducts) {
                 if (dynamic_cast<Offer*>(p)) hasOffers = true;
                 if (dynamic_cast<Drink*>(p)) hasDrinks = true;
@@ -1881,7 +1873,6 @@ int main() {
                 currentState = AppState::AdminMenu;
             }
 
-            // Popup de actualizare produs
             if (openEditPopup && productToEdit != nullptr) {
                 ImGui::OpenPopup("Actualizeaza Produs");
             }
@@ -1947,7 +1938,6 @@ int main() {
             bool hasDrinks = false, hasFoods = false, hasOffers = false;
             sort(listOfProducts.begin(), listOfProducts.end(), sort_criteria);
 
-            // Verificam existenta produselor pe categorii
             for (auto p : listOfProducts) {
                 if (dynamic_cast<Offer*>(p)) hasOffers = true;
                 if (dynamic_cast<Drink*>(p)) hasDrinks = true;
@@ -1959,7 +1949,7 @@ int main() {
             }
             else {
                 int index = 0;
-                // Folosim un index pentru a ști ce ștergem
+
                 if (hasDrinks) {
                     ImGui::TextColored(ImVec4(0.0f, 0.7f, 1.0f, 1.0f), "Bauturi:");
                     ImGui::Separator();
@@ -1974,7 +1964,7 @@ int main() {
                             if (ImGui::Button(buttonId.c_str())) {
                                 delete listOfProducts[i];
                                 listOfProducts.erase(listOfProducts.begin() + i);
-                                break; // IMPORTANT: break ca să nu stricăm iteratorul
+                                break;
                             }
                         }
                     }
@@ -2043,7 +2033,7 @@ int main() {
                 ImGui::Text("Lista rezervarilor:");
                 ImGui::Separator();
 
-                ImGui::Columns(3, "Rezervari"); // coloane: UserID, Numar persoane, Ora
+                ImGui::Columns(3, "Rezervari"); 
                 ImGui::Text("ID Client"); ImGui::NextColumn();
                 ImGui::Text("Numar Persoane"); ImGui::NextColumn();
                 ImGui::Text("Data si Ora"); ImGui::NextColumn();
@@ -2078,7 +2068,7 @@ int main() {
                 ImGui::Text("Clientii inregistrati:");
                 ImGui::Separator();
 
-                ImGui::Columns(3, "Clienti"); // 3 coloane: Nume, ID, Puncte
+                ImGui::Columns(3, "Clienti");
                 ImGui::Text("Nume Client"); ImGui::NextColumn();
                 ImGui::Text("ID"); ImGui::NextColumn();
                 ImGui::Text("Puncte Fidelitate"); ImGui::NextColumn();
@@ -2171,7 +2161,7 @@ int main() {
 
                 bool isSelected = (selectedProductIndex == i);
                 if (ImGui::RadioButton(label.c_str(), isSelected)) {
-                    selectedProductIndex = isSelected ? -1 : i;  // toggle
+                    selectedProductIndex = isSelected ? -1 : i; 
                 }
 
                 ImGui::Indent();
@@ -2335,7 +2325,7 @@ int main() {
 
             ImGui::InputInt("Numar persoane", &nrPersoane);
 
-            // formatare data
+            
             std::string formatted =
                 (zi < 10 ? "0" : "") + to_string(zi) + "/" +
                 (luna < 10 ? "0" : "") + to_string(luna) + "/" +
@@ -2525,7 +2515,6 @@ int main() {
 
 
 
-        //window.clear();
         ImGui::SFML::Render(window);
         window.display();
     }
