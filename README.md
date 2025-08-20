@@ -1,8 +1,8 @@
-# ☕ Cafe Management System (C++ GUI)
+#  Cafe Management System (C++ GUI)
 
 This project is a graphical user interface (GUI) application for managing a virtual coffee shop. It is developed in C++ using ImGui-SFML for the interface and follows object-oriented programming (OOP) principles.
 
-## 🔑 Features
+## Features
 
 ### Users
 - Login & registration
@@ -22,12 +22,12 @@ This project is a graphical user interface (GUI) application for managing a virt
 ### Statistics
 - Export stats (users, products, reservations, summary)
 
-## ⚙️ Tech Stack
+## Tech Stack
 - **Language**: C++
 - **GUI**: SFML 2.6.1 + ImGui
 - **OOP Concepts**: Inheritance, Polymorphism, Operator Overloading, Singleton
 
-## ▶️ Run Instructions
+## Run Instructions
 1. Install SFML and ImGui-SFML
 2. Compile `main.cpp`
 3. Run the app
